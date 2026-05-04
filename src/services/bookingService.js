@@ -42,7 +42,7 @@ export const deleteBooking = async (id) => {
   return data;
 };
 
-export const updateBookingStatus = async (id, status) => {
+export const updateBookingStatus = async ({ id, status }) => {
   const res = await fetch(`${API_URL}/${id}/status`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },

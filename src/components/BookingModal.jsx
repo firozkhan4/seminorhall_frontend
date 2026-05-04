@@ -12,7 +12,6 @@ export default function BookingModal({
   onClose,
   onSuccess,
 }) {
-  const { user } = useStore();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [hallId, setHallId] = useState(halls[0]?._id || "");
@@ -21,7 +20,7 @@ export default function BookingModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const createBooking = useMutation({
+  const bookingMutation = useMutation({
     mutationFn: createBooking,
     onSuccess: () => {
       onSuccess();
@@ -55,8 +54,7 @@ export default function BookingModal({
     }
 
     try {
-      createBooking.mutate({
-        user_id: user._id,
+      bookingMutation.mutate({
         hall_id: selectedHallId,
         title,
         description,

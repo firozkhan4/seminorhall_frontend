@@ -101,7 +101,7 @@ export default function Bookings() {
                 <div className="flex justify-between items-center mb-4">
                   {getStatusBadge(booking.status)}
                   <span className="text-[9px] font-mono text-neutral-300 font-bold">
-                    REF #{booking.id.toString().padStart(4, "0")}
+                    REF #{booking._id.toString().padStart(4, "0")}
                   </span>
                 </div>
 
@@ -129,11 +129,11 @@ export default function Bookings() {
 
               <div className="px-5 py-3 bg-bg border-t border-line flex justify-between items-center">
                 <span className="text-[9px] text-neutral-400 font-mono font-bold tracking-tight">
-                  LOGGED {format(parseISO(booking.created_at), "MM/dd HH:mm")}
+                  LOGGED {format(parseISO(booking.createdAt), "MM/dd HH:mm")}
                 </span>
                 {booking.status === "confirmed" && (
                   <button
-                    onClick={() => handleCancel(booking.id)}
+                    onClick={() => handleCancel(booking._id)}
                     className="flex items-center gap-1.5 text-[10px] font-black uppercase text-red-500 hover:text-red-700 transition-colors"
                   >
                     <Trash2 size={12} />

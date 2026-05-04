@@ -78,6 +78,10 @@ export default function Admin() {
     },
   });
 
+  const handleUpdateBookingStatus = (id, status) => {
+    statusMutation.mutate({ id, status });
+  };
+
   const handleSaveHall = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -186,7 +190,7 @@ export default function Admin() {
                 {bookings.map((b) => (
                   <tr key={b._id} className="hover:bg-bg/50 transition-colors">
                     <td className="p-4 text-[11px] font-mono font-bold text-neutral-400">
-                      #{b.id.toString().padStart(4, "0")}
+                      #{b._id.toString().padStart(4, "0")}
                     </td>
                     <td className="p-4">
                       <p className="text-xs font-black text-ink">{b.title}</p>
@@ -212,7 +216,7 @@ export default function Admin() {
                         {b.status === "pending" && (
                           <button
                             onClick={() =>
-                              handleUpdateBookingStatus(b.id, "confirmed")
+                              handleUpdateBookingStatus(b._id, "confirmed")
                             }
                             className="p-1.5 bg-green-50 text-green-600 rounded border border-green-200 hover:bg-green-100 transition-colors"
                           >
@@ -222,7 +226,7 @@ export default function Admin() {
                         {b.status !== "cancelled" && (
                           <button
                             onClick={() =>
-                              handleUpdateBookingStatus(b.id, "cancelled")
+                              handleUpdateBookingStatus(b._id, "cancelled")
                             }
                             className="p-1.5 bg-red-50 text-red-600 rounded border border-red-200 hover:bg-red-100 transition-colors"
                           >
