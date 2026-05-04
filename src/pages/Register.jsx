@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Building2, Mail, Lock, User, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { signup } from "../services/authService";
@@ -10,6 +10,7 @@ export default function Register({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const { isPending, mutate } = useMutation({
     mutationFn: signup,
