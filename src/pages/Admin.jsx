@@ -16,7 +16,12 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { format, parseISO } from "date-fns";
-import { createHall, deleteHall, getHalls } from "../services/hallService";
+import {
+  createHall,
+  deleteHall,
+  getHalls,
+  updateHall,
+} from "../services/hallService";
 import { getBookings, updateBookingStatus } from "../services/bookingService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -55,7 +60,16 @@ export default function Admin() {
     },
   });
 
-  const saveMutation = useMutation({
+  const { mutate: saveMutation } = useMutation({
+    mutationFn: updateHall,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["halls"]);
+      setShowHallModal(false);
+      setEditingHall(null);
+    },
+  });
+
+  const { mutate: handleCreateHall } = useMutation({
     mutationFn: createHall,
     onSuccess: () => {
       queryClient.invalidateQueries(["halls"]);
@@ -78,7 +92,11 @@ export default function Admin() {
         .map((s) => s.trim())
         .join(","),
     };
-    saveMutation.mutate({ _id: editingHall?._id, ...hallData });
+    if (editingHall === null) {
+      handleCreateHall(hallData);
+    } else {
+      saveMutation({ id: editingHall._id, ...hallData });
+    }
   };
 
   if (loadingBookings || loadingHalls)

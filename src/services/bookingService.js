@@ -1,6 +1,6 @@
 let API_URL;
 
-if (import.meta.env.NODE_ENV === "production") {
+if (import.meta.env.VITE_NODE_ENV === "production") {
   API_URL = import.meta.env.VITE_API_URL + "/bookings";
 } else {
   API_URL = "http://localhost:3000/bookings";

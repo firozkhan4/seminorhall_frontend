@@ -1,6 +1,6 @@
 let API_URL;
 
-if (import.meta.env.NODE_ENV === "production") {
+if (import.meta.env.VITE_NODE_ENV === "production") {
   API_URL = import.meta.env.VITE_API_URL + "/halls";
 } else {
   API_URL = "http://localhost:3000/halls";
@@ -32,11 +32,19 @@ export const createHall = async (hall) => {
   return data;
 };
 
-export const updateHall = async (id, hall) => {
+export const updateHall = async ({
+  id,
+  name,
+  capacity,
+  location,
+  description,
+  amenities,
+}) => {
+  console.log(hall);
   const res = await fetch(`${API_URL}/${id}`, {
-    method: "PATCH",
+    method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(hall),
+    body: JSON.stringify({ name, capacity, location, description, amenities }),
     credentials: "include",
   });
   const data = await res.json();
