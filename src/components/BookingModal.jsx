@@ -63,10 +63,6 @@ export default function BookingModal({
         start_time: finalStart.toISOString(),
         end_time: finalEnd.toISOString(),
       });
-
-      const data = createBooking.data;
-      if (!res.ok) throw new Error(data.error);
-      onSuccess();
     } catch (err) {
       setError(err.message);
       setLoading(false);
