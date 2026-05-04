@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { X, Calendar, Clock, Building2, AlignLeft, Check } from "lucide-react";
 import { format, setHours, setMinutes } from "date-fns";
 import { motion, AnimatePresence } from "motion/react";
+import { useMutation } from "@tanstack/react-query";
+import { createBooking } from "../services/bookingService";
 
 export default function BookingModal({
   selectedDate,
@@ -16,6 +18,14 @@ export default function BookingModal({
   const [endTime, setEndTime] = useState("10:00");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const createBooking = useMutation({
+    mutationFn: createBooking,
+    onSuccess: () => {
+      onSuccess();
+      onClose();
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +44,7 @@ export default function BookingModal({
       return;
     }
 
-    const selectedHallId = hallId || halls[0]?.id;
+    const selectedHallId = hallId || halls[0]?._id;
 
     if (!selectedHallId) {
       setError("Please select a hall");
@@ -43,19 +53,15 @@ export default function BookingModal({
     }
 
     try {
-      const res = await fetch("/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          hall_id: selectedHallId,
-          title,
-          description,
-          start_time: finalStart.toISOString(),
-          end_time: finalEnd.toISOString(),
-        }),
-        credentials: "include",
+      createBooking.mutate({
+        hall_id: selectedHallId,
+        title,
+        description,
+        start_time: finalStart.toISOString(),
+        end_time: finalEnd.toISOString(),
       });
-      const data = await res.json();
+
+      const data = createBooking.data;
       if (!res.ok) throw new Error(data.error);
       onSuccess();
     } catch (err) {
