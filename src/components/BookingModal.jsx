@@ -15,7 +15,7 @@ export default function BookingModal({
   const { user } = useStore();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [hallId, setHallId] = useState(halls[0]?.id || "");
+  const [hallId, setHallId] = useState(halls[0]?._id || "");
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("10:00");
   const [loading, setLoading] = useState(false);
