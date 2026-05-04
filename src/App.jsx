@@ -13,9 +13,9 @@ import Halls from "./pages/Halls";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Admin from "./pages/Admin";
-import { useStore } from "./assets/stores/useStore";
 import { useQuery } from "@tanstack/react-query";
 import { checkAuth } from "./services/authService";
+import { useStore } from "./stores/useStore";
 
 export default function App() {
   const { user, setUser } = useStore();

@@ -9,8 +9,8 @@ import {
   User,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useStore } from "../assets/stores/useStore";
 import { logout } from "../services/authService";
+import { useStore } from "../stores/useStore";
 
 export default function Navbar() {
   const { user, clearUser } = useStore();

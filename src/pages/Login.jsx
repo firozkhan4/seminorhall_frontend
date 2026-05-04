@@ -4,7 +4,7 @@ import { Building2, Mail, Lock, ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../services/authService";
-import { useStore } from "../assets/stores/useStore";
+import { useStore } from "../stores/useStore";
 
 export default function Login() {
   const { setUser } = useStore();

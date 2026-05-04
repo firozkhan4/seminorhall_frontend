@@ -4,6 +4,7 @@ import { format, setHours, setMinutes } from "date-fns";
 import { motion, AnimatePresence } from "motion/react";
 import { useMutation } from "@tanstack/react-query";
 import { createBooking } from "../services/bookingService";
+import { useStore } from "../stores/useStore";
 
 export default function BookingModal({
   selectedDate,
@@ -11,6 +12,7 @@ export default function BookingModal({
   onClose,
   onSuccess,
 }) {
+  const { user } = useStore();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [hallId, setHallId] = useState(halls[0]?.id || "");
@@ -54,6 +56,7 @@ export default function BookingModal({
 
     try {
       createBooking.mutate({
+        user_id: user._id,
         hall_id: selectedHallId,
         title,
         description,
